@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>臺灣軍購困境分析 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&family=Share+Tech+Mono&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c10;
+    --bg2: #0d1520;
+    --bg3: #111d2e;
+    --accent: #c8972a;
+    --accent2: #e63946;
+    --green: #2a9d5c;
+    --blue: #1d6fa4;
+    --text: #d4dce8;
+    --text-dim: #6b7f94;
+    --border: rgba(200,151,42,0.2);
+    --grid: rgba(200,151,42,0.04);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans TC', sans-serif;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(200,151,42,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,151,42,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* HEADER */
+  header {
+    position: relative;
+    padding: 70px 40px 50px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(230,57,70,0.12) 0%, transparent 70%);
+  }
+
+  .tag {
+    display: inline-block;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 4px 14px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    animation: fadeIn 0.6s ease both;
+  }
+
+  h1 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.2;
+    animation: slideUp 0.7s ease both 0.1s;
+  }
+
+  h1 span {
+    color: var(--accent2);
+    position: relative;
+  }
+
+  .subtitle {
+    margin-top: 16px;
+    font-size: 0.95rem;
+    color: var(--text-dim);
+    font-family: 'Share Tech Mono', monospace;
+    letter-spacing: 0.05em;
+    animation: fadeIn 0.7s ease both 0.3s;
+  }
+
+  .stat-bar {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+    animation: fadeIn 0.7s ease both 0.4s;
+  }
+
+  .stat-item {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 2rem;
+    color: var(--accent);
+    font-weight: bold;
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+  }
+
+  /* MAIN */
+  main {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 24px;
+  }
+
+  section {
+    margin-bottom: 70px;
+  }
+
+  .section-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .section-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* CRISIS CARDS */
+  .crisis-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+  }
+
+  .crisis-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 28px 24px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .crisis-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--accent2);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+
+  .crisis-card:hover { border-color: rgba(200,151,42,0.5); transform: translateY(-3px); }
+  .crisis-card:hover::before { transform: scaleX(1); }
+
+  .card-icon {
+    font-size: 2rem;
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  .card-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 10px;
+  }
+
+  .card-body {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    line-height: 1.75;
+  }
+
+  .card-highlight {
+    color: var(--accent);
+    font-family: 'Share Tech Mono', monospace;
+    font-weight: bold;
+  }
+
+  /* PARTY TABLE */
+  .party-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  @media (max-width: 700px) {
+    .party-grid { grid-template-columns: 1fr; }
+  }
+
+  .party-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 26px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .party-card .party-stripe {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+  }
+
+  .dpp .party-stripe { background: var(--accent2); }
+  .kmt .party-stripe { background: var(--blue); }
+  .tpp .party-stripe { background: #4db8d0; }
+
+  .party-name {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+    padding-left: 14px;
+  }
+
+  .party-amount {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1.6rem;
+    font-weight: 900;
+    padding-left: 14px;
+    margin-bottom: 12px;
+    color: #fff;
+  }
+
+  .dpp .party-amount { color: #f28b82; }
+  .kmt .party-amount { color: #82aef2; }
+  .tpp .party-amount { color: #82d4e3; }
+
+  .party-detail {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    padding-left: 14px;
+    line-height: 1.7;
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-family: 'Share Tech Mono', monospace;
+    padding: 2px 8px;
+    border-radius: 2px;
+    margin-top: 8px;
+    letter-spacing: 0.05em;
+  }
+
+  .badge-warn { background: rgba(230,57,70,0.15); color: var(--accent2); border: 1px solid rgba(230,57,70,0.3); }
+  .badge-ok { background: rgba(42,157,92,0.15); color: var(--green); border: 1px solid rgba(42,157,92,0.3); }
+  .badge-neutral { background: rgba(200,151,42,0.1); color: var(--accent); border: 1px solid var(--border); }
+
+  /* TIMELINE */
+  .timeline {
+    position: relative;
+    padding-left: 30px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px; bottom: 10px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent2), var(--accent), transparent);
+  }
+
+  .tl-item {
+    position: relative;
+    margin-bottom: 30px;
+  }
+
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -34px; top: 8px;
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--accent2);
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 8px rgba(230,57,70,0.6);
+  }
+
+  .tl-date {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+  }
+
+  .tl-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+
+  .tl-body {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+  }
+
+  /* RISK TABLE */
+  .risk-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+
+  .risk-table th {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    text-transform: uppercase;
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg3);
+  }
+
+  .risk-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(200,151,42,0.08);
+    color: var(--text);
+  }
+
+  .risk-table tr:hover td { background: rgba(200,151,42,0.04); }
+
+  .risk-level {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: bold;
+  }
+
+  .risk-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .risk-high { color: var(--accent2); }
+  .risk-high .risk-dot { background: var(--accent2); box-shadow: 0 0 6px var(--accent2); }
+  .risk-med { color: var(--accent); }
+  .risk-med .risk-dot { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+  .risk-low { color: var(--green); }
+  .risk-low .risk-dot { background: var(--green); }
+
+  /* US PRESSURE */
+  .pressure-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  @media (max-width: 600px) {
+    .pressure-grid { grid-template-columns: 1fr; }
+  }
+
+  .pressure-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 22px 20px;
+  }
+
+  .pressure-who {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+
+  .pressure-title {
+    font-weight: 600;
+    color: #fff;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+  }
+
+  .pressure-body {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+  }
+
+  .stance-icon {
+    float: right;
+    font-size: 1.3rem;
+    margin-left: 8px;
+  }
+
+  /* COUNTDOWN */
+  .countdown-box {
+    background: var(--bg2);
+    border: 1px solid rgba(230,57,70,0.4);
+    padding: 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .countdown-box::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(230,57,70,0.06) 0%, transparent 70%);
+  }
+
+  .countdown-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    color: var(--accent2);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .countdown-num {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: clamp(1.4rem, 3.5vw, 2.8rem);
+    color: var(--accent2);
+    font-weight: bold;
+    display: block;
+    animation: pulse 2s infinite;
+  }
+
+  .countdown-sub {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    margin-top: 8px;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 30px 40px;
+    text-align: center;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+  }
+
+  .live-idle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 40px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+  }
+
+  .fetch-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.9rem;
+    letter-spacing: 0.12em;
+    padding: 14px 32px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    text-transform: uppercase;
+  }
+
+  .fetch-btn:hover {
+    background: var(--accent);
+    color: var(--bg);
+    box-shadow: 0 0 20px rgba(200,151,42,0.3);
+  }
+
+  .fetch-btn:active { transform: scale(0.98); }
+
+  .fetch-icon {
+    font-size: 1.3rem;
+    display: inline-block;
+    transition: transform 0.3s;
+  }
+
+  .fetch-btn:hover .fetch-icon { transform: rotate(180deg); }
+
+  .fetch-hint {
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    font-family: 'Share Tech Mono', monospace;
+    letter-spacing: 0.05em;
+  }
+
+  .live-loading {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 30px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 0.88rem;
+    font-family: 'Share Tech Mono', monospace;
+  }
+
+  .spinner {
+    width: 20px; height: 20px;
+    border: 2px solid rgba(200,151,42,0.2);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .live-error {
+    padding: 20px 24px;
+    background: rgba(230,57,70,0.07);
+    border: 1px solid rgba(230,57,70,0.25);
+    color: var(--accent2);
+    font-size: 0.82rem;
+    font-family: 'Share Tech Mono', monospace;
+  }
+
+  .live-timestamp {
+    margin-top: 12px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    text-align: right;
+  }
+
+  .news-item {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    padding: 20px 22px;
+    margin-bottom: 14px;
+    transition: border-color 0.2s;
+  }
+
+  .news-item:hover { border-color: rgba(200,151,42,0.5); }
+
+  .news-item-title {
+    font-weight: 600;
+    color: #fff;
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+  }
+
+  .news-item-body {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    line-height: 1.75;
+  }
+
+  .news-item-meta {
+    margin-top: 8px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: rgba(200,151,42,0.5);
+    letter-spacing: 0.05em;
+  }
+
+  .refresh-btn {
+    margin-top: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--accent);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    padding: 8px 18px;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .refresh-btn:hover {
+    background: rgba(200,151,42,0.08);
+    border-color: var(--accent);
+  }
+
+  .refresh-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .news-summary-bar {
+    background: rgba(200,151,42,0.08);
+    border: 1px solid var(--border);
+    padding: 14px 18px;
+    margin-bottom: 18px;
+    font-size: 0.88rem;
+    color: var(--accent);
+    font-family: 'Share Tech Mono', monospace;
+    letter-spacing: 0.05em;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .revealed { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="tag">INTELLIGENCE BRIEF ▸ 2026.03.07</div>
+  <h1>臺灣軍購<span>困境</span>全解析</h1>
+  <p class="subtitle">TAIWAN ARMS PROCUREMENT CRISIS // STATUS: CRITICAL</p>
+  <div class="stat-bar">
+    <div class="stat-item">
+      <span class="stat-num">~320億</span>
+      <span class="stat-label">美元軍購積壓（DSCA追蹤數據）</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">10次</span>
+      <span class="stat-label">特別條例遭封殺次數</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">600億</span>
+      <span class="stat-label">新台幣仍在FRB帳戶待撥付</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">3/15</span>
+      <span class="stat-label">發價書到期截止日</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- CRISIS OVERVIEW -->
+  <section class="reveal">
+    <div class="section-label">▸ THREAT ASSESSMENT</div>
+    <h2 class="section-title">四大核心困境</h2>
+    <div class="crisis-grid">
+      <div class="crisis-card">
+        <span class="card-icon">🏛️</span>
+        <div class="card-title">立法進展與剩餘分歧</div>
+        <div class="card-body">
+          特別條例歷經 <span class="card-highlight">10 度封殺</span>，3 月 6 日完成付委。民眾黨另提 3 項發價書授權案已逕付二讀，是重大突破。然而三黨預算金額（1.25 兆 vs 4,000 億 vs 3,800 億）差距懸殊，實質審查分歧仍大。
+        </div>
+      </div>
+      <div class="crisis-card">
+        <span class="card-icon">⏱️</span>
+        <div class="card-title">發價書即將到期</div>
+        <div class="card-body">
+          標槍飛彈、M109A7 自走砲、拖式 2B 飛彈 3 項發價書 <span class="card-highlight">3 月 15 日</span>到期。第 4 份發價書已於 3/6 確認到位，僅 <span class="card-highlight">ALTIUS-700</span> 尚未到達。民眾黨授權案已逕付二讀，5 案能否一體授權仍待朝野協商。
+        </div>
+      </div>
+      <div class="crisis-card">
+        <span class="card-icon">📦</span>
+        <div class="card-title">發價書展延充滿變數</div>
+        <div class="card-body">
+          國防部已於農曆年前向 DSCA 申請展延三項發價書，但程序需逐層詢問主合約商與各分包商。<span class="card-highlight">任何一家廠商拒絕配合，展延即失敗</span>，台灣須重走整個申購程序，等待時間恐超過兩年。（來源：自由時報、中央社）
+        </div>
+      </div>
+      <div class="crisis-card">
+        <span class="card-icon">🎭</span>
+        <div class="card-title">川普訪中外交牌</div>
+        <div class="card-body">
+          川普為保住 <span class="card-highlight">4 月訪中峰會</span>，主動暫緩宣布含愛國者飛彈、NASAMS 的新軍售案（規模最高 200 億美元），使臺灣在美中關係中處於被動位置。
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARTY VERSIONS -->
+  <section class="reveal">
+    <div class="section-label">▸ POLITICAL ANALYSIS</div>
+    <h2 class="section-title">三黨版本對決</h2>
+    <div class="party-grid">
+      <div class="party-card dpp">
+        <div class="party-stripe"></div>
+        <div class="party-name">民主進步黨（行政院版）</div>
+        <div class="party-amount">1.25 兆元</div>
+        <div class="party-detail">
+          8 年整體規劃，涵蓋 7 類裝備，含「台灣之盾」概念與國防自主項目，已獲美方政府及國會背書。
+          <br><br>
+          <span class="badge badge-ok">美方背書</span>
+        </div>
+      </div>
+      <div class="party-card kmt">
+        <div class="party-stripe"></div>
+        <div class="party-name">中國國民黨</div>
+        <div class="party-amount">3,800億＋N</div>
+        <div class="party-detail">
+          涵蓋美方 12/18 公告的 8 項 FMS 案，執行期至 2028 年底。懲罰條款不入法，改以附帶決議處理。採購需符合「三大要件」：台海作戰需求、完成建案程序、美方同意出售。未來新發價書另立第二階段條例。
+          <br><br>
+          <span class="badge badge-warn">執行期至2028</span>
+          <span class="badge badge-neutral">懲罰改附帶決議</span>
+        </div>
+      </div>
+      <div class="party-card tpp">
+        <div class="party-stripe"></div>
+        <div class="party-name">台灣民眾黨</div>
+        <div class="party-amount">4,000億</div>
+        <div class="party-detail">
+          一年一編制，僅涵蓋近期美方已發出發價書的軍購項目，要求逐案專案報告，強調財政永續、不得排擠社福支出。
+          <br><br>
+          <span class="badge badge-neutral">一年一編</span>
+          <span class="badge badge-neutral">逐案專案報告</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section class="reveal">
+    <div class="section-label">▸ CHRONOLOGY</div>
+    <h2 class="section-title">關鍵時間軸</h2>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-date">2025.12.17</div>
+        <div class="tl-title">史上最大單筆軍售案通知國會</div>
+        <div class="tl-body">川普政府批准超過 110 億美元軍售，含 HIMARS、M109A7、Javelin、ALTIUS 等不對稱作戰武器，積壓總額升至 320 億美元。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2026.02.06</div>
+        <div class="tl-title">川普簽署「美國優先武器移轉策略」</div>
+        <div class="tl-body">理論上有利於台灣取得更多先進武器，但策略全文未明確提及台灣。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2026.03.03</div>
+        <div class="tl-title">程序委員會通過：行政院版列入議程</div>
+        <div class="tl-body">立法院程序委員會 3 日經表決通過，將行政院版 1.25 兆國防特別條例列入 6 日院會議程，依朝野協商共識送付委員會審查。（來源：中央社）</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2026.03.05</div>
+        <div class="tl-title">國民黨黨版拍板：3,500億＋N、懲罰條款不入法</div>
+        <div class="tl-body">國民黨立院黨團召開黨團大會凝聚共識，確認「3,500億＋N」版本，懲罰條款改以附帶決議處理，放棄徐巧芯的 8,100 億版本。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2026.02.24（農曆年前）</div>
+        <div class="tl-title">國防部雙管齊下：籲立院授權＋向 DSCA 申請展延</div>
+        <div class="tl-body">國防部長顧立雄公開表示盼立院授權先行簽署發價書；國防部戰略規劃司農曆年前已正式發函美國國防安全合作局（DSCA），申請展延三項發價書效期，但能否成功展延取決於美方各層廠商能否配合。（來源：中央社、自由時報）</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2026.03.06</div>
+        <div class="tl-title">三黨付委；民眾黨提授權案逕付二讀；第4份發價書到達</div>
+        <div class="tl-body">行政院版（1.25 兆）、國民黨版（3,800 億）、民眾黨版（4,000 億）三案正式付委併案審查。同日，民眾黨另提「授權行政院先行簽署 3 項發價書」院會決議案，朝野達成共識逕付二讀。顧立雄備詢時透露第 4 份發價書已到，僅 ALTIUS-700 反裝甲無人機飛彈系統尚未到位，盼立院一體授權 5 案。（來源：聯合新聞網、Newtalk、中央社）</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2026.03.11（預計）</div>
+        <div class="tl-title">委員會召委選出，可正式排審</div>
+        <div class="tl-body">按國民黨智庫說帖，召委選出後即可排定審查議程，若不受黨團協商一個月冷凍期限制，最快可於 3 月底完成二三讀。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">⚠ 2026.03.15</div>
+        <div class="tl-title">關鍵截止：3 項軍購案發價書到期</div>
+        <div class="tl-body">標槍飛彈、M109A7 自走砲、拖式 2B 飛彈發價書到期。國防部已請求立院先行授權簽署，否則須重走全部程序，等待時間恐延後逾兩年。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2026.03 底（最樂觀）</div>
+        <div class="tl-title">二三讀最快完成時程</div>
+        <div class="tl-body">按國民黨智庫估算，若審查順利且不受協商冷凍期限制，最快 3 月底可完成二三讀。但三黨分歧仍大，此時程高度不確定。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2026.04（預計）</div>
+        <div class="tl-title">川普訪中峰會</div>
+        <div class="tl-body">愛國者飛彈、NASAMS 等新軍售案（規模達 200 億美元）被暫緩至峰會結束後，台灣軍購前途繫於美中關係走向。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RISK TABLE -->
+  <section class="reveal">
+    <div class="section-label">▸ RISK MATRIX</div>
+    <h2 class="section-title">風險評估矩陣</h2>
+    <table class="risk-table">
+      <thead>
+        <tr>
+          <th>風險項目</th>
+          <th>核心問題</th>
+          <th>風險等級</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>發價書展延申請能否獲批</td>
+          <td>國防部已向 DSCA 申請展延，但需各層供應商逐一同意，任一廠商拒絕即告失敗</td>
+          <td><span class="risk-level risk-high"><span class="risk-dot"></span>極高</span></td>
+        </tr>
+        <tr>
+          <td>發價書到期取消</td>
+          <td>3 月 15 日前立院無法授權，3 案恐作廢</td>
+          <td><span class="risk-level risk-high"><span class="risk-dot"></span>極高</span></td>
+        </tr>
+        <tr>
+          <td>三黨版本無法整合</td>
+          <td>金額、期程、範圍三方分歧，朝野邏輯根本不同</td>
+          <td><span class="risk-level risk-high"><span class="risk-dot"></span>極高</span></td>
+        </tr>
+        <tr>
+          <td>3月底二三讀時程過於樂觀</td>
+          <td>黨團協商冷凍期一個月若啟動，3月底完成二三讀形同不可能</td>
+          <td><span class="risk-level risk-high"><span class="risk-dot"></span>極高</span></td>
+        </tr>
+        <tr>
+          <td>川普外交施壓</td>
+          <td>以暫緩軍售換取訪中峰會，台灣被動</td>
+          <td><span class="risk-level risk-high"><span class="risk-dot"></span>極高</span></td>
+        </tr>
+        <tr>
+          <td>美方交付延宕爭議</td>
+          <td>外媒稱 215 億美元未交付，但國防部駁斥數字有誤；FRB 帳戶實際僅餘約 600 億新台幣待撥付</td>
+          <td><span class="risk-level risk-med"><span class="risk-dot"></span>中等</span></td>
+        </tr>
+        <tr>
+          <td>特別預算財政壓力</td>
+          <td>民眾黨憂排擠社福，政治上難以兼顧</td>
+          <td><span class="risk-level risk-med"><span class="risk-dot"></span>中等</span></td>
+        </tr>
+        <tr>
+          <td>美 2026 國防戰略不提台灣</td>
+          <td>川普政府戰略文件隻字未提台灣，引發質疑</td>
+          <td><span class="risk-level risk-med"><span class="risk-dot"></span>中等</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- US PRESSURE -->
+  <section class="reveal">
+    <div class="section-label">▸ EXTERNAL PRESSURE</div>
+    <h2 class="section-title">美國官方態度</h2>
+    <div class="pressure-grid">
+      <div class="pressure-card">
+        <div class="pressure-who">AIT 處長</div>
+        <div class="pressure-title"><span class="stance-icon">✅</span>谷立言：明確支持 1.25 兆</div>
+        <div class="pressure-body">強調「自由均有代價」，盛讚賴清德的 1.25 兆承諾「至為關鍵」，呼籲藍白效法美國兩黨共識，將國防列為超黨派議題。</div>
+      </div>
+      <div class="pressure-card">
+        <div class="pressure-who">美國國務院</div>
+        <div class="pressure-title"><span class="stance-icon">✅</span>正式公開背書 400 億美元</div>
+        <div class="pressure-body">駁斥民眾黨「谷立言介入內政」的批評，重申歡迎台灣宣布 400 億美元國防採購預算，立場與 AIT 一致。</div>
+      </div>
+      <div class="pressure-card">
+        <div class="pressure-who">美國國會（跨黨派）</div>
+        <div class="pressure-title"><span class="stance-icon">⚠️</span>施壓在野黨，表達憂慮</div>
+        <div class="pressure-body">參議員蘇利文批評「為北京低頭削減國防等於玩火」，參院軍事及外交委員會主席接連發聲，矛頭指向台灣在野黨。</div>
+      </div>
+      <div class="pressure-card">
+        <div class="pressure-who">川普政府</div>
+        <div class="pressure-title"><span class="stance-icon">⚠️</span>言辭支持、行動暫緩</div>
+        <div class="pressure-body">2026 年國防戰略全文不提「台灣」，更以訪中峰會為由暫緩宣布愛國者飛彈等新軍售，造成美方官方表態與實際行動的明顯落差。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COUNTDOWN -->
+  <section class="reveal">
+    <div class="section-label">▸ CRITICAL DEADLINE</div>
+    <h2 class="section-title">倒數計時</h2>
+    <div class="countdown-box">
+      <div class="countdown-label">▸ 發價書截止日倒數</div>
+      <span class="countdown-num" id="countdown">-- 天</span>
+      <div class="countdown-sub" id="countdown-sub">距離 2026 年 3 月 15 日 ── M109A7 自走砲等 3 項軍購案發價書到期</div>
+      <div style="margin-top:16px; font-size:0.78rem; color:var(--text-dim)">
+        若立法院無法及時授權 → 相關案件恐遭取消 → 建軍進程延宕
+      </div>
+    </div>
+  </section>
+
+
+
+</main>
+
+<footer>
+  資料來源：聯合新聞網 ／ 中央社 ／ Newtalk ／ 自由時報 ／ Reuters ／ AP ／ Defense News ／ AIT 官方聲明<br>
+  <span id="update-time"></span><br>
+  本頁資訊僅供參考，重要決策請以一手媒體為準
+</footer>
+
+<script>
+  // Last updated timestamp
+  const lastUpdated = new Date('2026-03-07T12:00:00');
+  const pad = n => String(n).padStart(2, '0');
+  document.getElementById('update-time').textContent =
+    `資訊整理時間：${lastUpdated.getFullYear()}.${pad(lastUpdated.getMonth()+1)}.${pad(lastUpdated.getDate())} ` +
+    `${pad(lastUpdated.getHours())}:${pad(lastUpdated.getMinutes())} ｜ 已核實多方來源`;
+
+  // Countdown
+  function updateCountdown() {
+    const deadline = new Date('2026-03-15T00:00:00');
+    const now = new Date();
+    const diff = deadline - now;
+    if (diff > 0) {
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      const pad = n => String(n).padStart(2, '0');
+      document.getElementById('countdown').textContent = `${days} 天 ${pad(hours)} 時 ${pad(minutes)} 分 ${pad(seconds)} 秒`;
+    } else {
+      document.getElementById('countdown').textContent = '已到期';
+      document.getElementById('countdown').style.color = '#888';
+      document.getElementById('countdown-sub').textContent = '發價書截止日已過，請確認最新狀況';
+    }
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('revealed'), i * 80);
+      }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(r => observer.observe(r));
+
+  // Page loads in idle state — user triggers search manually
+
+</script>
+</body>
+</html>
